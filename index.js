@@ -11,18 +11,18 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 app.use(customerroutes)
-app.use(employeeroutes);
+// app.use(employeeroutes);
 
 connectdatabase();
 const PORT = process.env.PORT;
 
-const cloudinary = require("cloudinary").v2;
+// const cloudinary = require("cloudinary").v2;
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARYNAME,
-  api_key: process.env.CLOUDINARYAPIKEY,
-  api_secret: process.env.CLOUDINARYAPISECRET,
-});
+// cloudinary.config({
+//   cloud_name: process.env.CLOUDINARYNAME,
+//   api_key: process.env.CLOUDINARYAPIKEY,
+//   api_secret: process.env.CLOUDINARYAPISECRET,
+// });
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
