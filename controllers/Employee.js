@@ -43,6 +43,7 @@ exports.login = async (req, res, next) => {
 };
 
 exports.account = async (req, res, next) => {
+  console.log("Account page start")
   const { username } = req.params;
   console.log("username", username);
   console.log("employees", employees.find());
