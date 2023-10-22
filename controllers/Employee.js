@@ -44,7 +44,9 @@ exports.login = async (req, res, next) => {
 
 exports.account = async (req, res, next) => {
   const { username } = req.params;
-
+  console.log("username", username);
+  console.log("employees", employees.find());
+  console.log("verified user",req.user)
   try {
     if (req.user.first_name == username) {
       const employeedata = {
