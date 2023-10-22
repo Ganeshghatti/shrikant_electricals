@@ -14,7 +14,7 @@ const upload = multer({ storage: storage });
 exports.form = async (req, res) => {
   const textData = req.body;
   const imageFiles = req.files;
-  console.log(req.file, req.files);
+  console.log("this is formdata not related",req.file, req.files);
   console.log("Received Text Data:");
   console.log(textData);
 
