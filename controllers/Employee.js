@@ -5,6 +5,8 @@ const cors = require("cors");
 const express = require("express");
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
+const moment = require("moment");
+const cron = require("node-cron");
 
 const app = express();
 app.use(cors());
@@ -43,11 +45,8 @@ exports.login = async (req, res, next) => {
 };
 
 exports.account = async (req, res, next) => {
-  console.log("Account page start")
   const { username } = req.params;
-  console.log("username", username);
-  console.log("employees", employees.find());
-  console.log("verified user",req.user)
+
   try {
     if (req.user.first_name == username) {
       const employeedata = {
@@ -59,6 +58,7 @@ exports.account = async (req, res, next) => {
         ESI: req.user.ESI,
         Salary: req.user.Salary,
         Tenure: req.user.Tenure,
+        Attendence: req.user.Attendence,
       };
       console.log(req.user);
       res.status(200).json({ user: employeedata });
@@ -68,6 +68,20 @@ exports.account = async (req, res, next) => {
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
+};
+exports.markattendence = async (req, res) => {
+  const employee = await employees.findOne({ email: req.user.email });
+  console.log(moment().format("dddd"))
+  const newAttendance = {
+    date: moment().format('L'),
+    isPresent: true,
+  };
+  employee.Attendence.push(newAttendance);
+
+  await employee.save();
+
+  console.log(employee);
+  res.status(200).send("Superb, you did it");
 };
 
 exports.test = async (req, res, next) => {

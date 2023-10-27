@@ -1,60 +1,51 @@
 const express = require("express");
+const Customer = require("../model/Customer");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const multer = require("multer");
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-
 exports.form = async (req, res) => {
-  const textData = req.body;
-  const imageFiles = req.files;
-  console.log("this is formdata not related",req.file, req.files);
-  console.log("Received Text Data:");
-  console.log(textData);
+  const {
+    NOC,
+    TaxReceipt,
+    AADHARCard,
+    NeighboursBill,
+    BorewellCertificate,
+    RTC,
+    KW_HP,
+    radioOption,
+    name,
+    email,
+    phoneNumber,
+    query,
+  } = req.body; 
 
-  console.log("Received Image Files:");
-  console.log(imageFiles);
+  const newCustomer = new Customer({
+    name,
+    phone: phoneNumber,
+    email,
+    query,
+    LT: radioOption,
+    KW_HP,
+    NOC,
+    TaxReceipt,
+    AADHARCard,
+    NeighboursBill,
+    BorewellCertificate,
+    RTC,
+  });
 
-  res.send("Data received on the server.");
-
-  //   if (!req.file) {
-  //     return res.status(400).json({ message: "No file uploaded" });
-  //   }
-
-  //   const imageBuffer = req.file.buffer;
-
-  //   try {
-  //     const cloudinaryResponse = await cloudinary.uploader
-  //       .upload_stream(
-  //         {
-  //           resource_type: "image",
-  //           format: "jpg",
-  //           folder: "Shrikant_electricals/test",
-  //         },
-  //         (error, result) => {
-  //           if (error) {
-  //             console.error("Error uploading to Cloudinary:", error);
-  //             return res
-  //               .status(500)
-  //               .json({ message: "Error uploading to Cloudinary" });
-  //           }
-  //         }
-  //       )
-  //       .end(imageBuffer);
-
-  //     if (cloudinaryResponse) {
-  //       return res.status(200).json({ message: "Image uploaded to Cloudinary" });
-  //     } else {
-  //       return res.status(500).json({ message: "Error uploading to Cloudinary" });
-  //     }
-  //   } catch (error) {
-  //     console.error("Error during image upload:", error);
-  //     return res.status(500).json({ message: "Internal server error" });
-  //   }
+  newCustomer
+    .save()
+    .then((savedCustomer) => {
+      res.status(201).json(savedCustomer); 
+    })
+    .catch((error) => {
+      console.error("Error saving customer:", error);
+      res.status(500).json({ error: "Failed to save customer" }); 
+    });
 };
