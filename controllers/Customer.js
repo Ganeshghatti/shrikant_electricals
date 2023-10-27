@@ -17,12 +17,13 @@ exports.form = async (req, res) => {
     BorewellCertificate,
     RTC,
     KW_HP,
+    Balake,
     radioOption,
     name,
     email,
     phoneNumber,
     query,
-  } = req.body; 
+  } = req.body;
 
   const newCustomer = new Customer({
     name,
@@ -31,6 +32,7 @@ exports.form = async (req, res) => {
     query,
     LT: radioOption,
     KW_HP,
+    Balake,
     NOC,
     TaxReceipt,
     AADHARCard,
@@ -38,14 +40,14 @@ exports.form = async (req, res) => {
     BorewellCertificate,
     RTC,
   });
-
+  console.log(req.body);
   newCustomer
     .save()
     .then((savedCustomer) => {
-      res.status(201).json(savedCustomer); 
+      res.status(201).json(savedCustomer);
     })
     .catch((error) => {
       console.error("Error saving customer:", error);
-      res.status(500).json({ error: "Failed to save customer" }); 
+      res.status(500).json({ error: "Failed to save customer" });
     });
 };

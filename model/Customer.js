@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require("moment");
 
 const CustomerSchema = new mongoose.Schema({
   name: String,
@@ -6,6 +7,7 @@ const CustomerSchema = new mongoose.Schema({
   email: String,
   query: String,
   LT: String,
+  Balake:String,
   KW_HP: Number,
   NOC: String,
   TaxReceipt: String,
@@ -14,8 +16,13 @@ const CustomerSchema = new mongoose.Schema({
   BorewellCertificate: String,
   RTC: String,
   Time: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    default: moment().format('LT'),
+    immutable: true,
+  },
+  Day: {
+    type: String,
+    default: moment().format('L'),
     immutable: true,
   }
 });
