@@ -30,25 +30,37 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARYAPISECRET,
 });
 
-cron.schedule("45 23 * * *", async () => {
+cron.schedule("09 11 * * *", async () => {
   console.log("Running scheduled task at 11: 45 PM");
   const currentDay = moment().format("dddd");
 
   try {
-    const ab_employees = await employees.find({
-      "Attendence": {
-        $not: {
-          $elemMatch: { day: currentDay }
-        }
+    if (currentDay === "Sunday" || currentDay === "Saturday") {
+      const employeesData  = await employees.find();
+      const newAttendance = {
+        date: moment().format("L"),
+        isPresent: null,
+      };
+      for (const employee of employeesData ) {
+        employee.Attendence.push(newAttendance);
+        await employee.save();
       }
-    });
-    const newAttendance = {
-      date: moment().format('L') ,
-      isPresent: false,
-    };
-    for (const employee of ab_employees) {
-      employee.Attendence.push(newAttendance);
-      await employee.save();
+    } else {
+      const ab_employees = await employees.find({
+        Attendence: {
+          $not: {
+            $elemMatch: { day: currentDay },
+          },
+        },
+      });
+      const newAttendance = {
+        date: moment().format("L"),
+        isPresent: false,
+      };
+      for (const employee of ab_employees) {
+        employee.Attendence.push(newAttendance);
+        await employee.save();
+      }
     }
   } catch (error) {
     console.error(error);
@@ -58,4 +70,3 @@ cron.schedule("45 23 * * *", async () => {
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
-

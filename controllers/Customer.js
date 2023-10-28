@@ -9,38 +9,32 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 exports.form = async (req, res) => {
+  console.log(req.body)
   const {
-    NOC,
-    TaxReceipt,
-    AADHARCard,
-    NeighboursBill,
-    BorewellCertificate,
-    RTC,
     KW_HP,
     Balake,
-    radioOption,
+    LT,
     name,
     email,
     phoneNumber,
     query,
+    imageURLs
   } = req.body;
-
   const newCustomer = new Customer({
     name,
     phone: phoneNumber,
     email,
     query,
-    LT: radioOption,
+    LT,
     KW_HP,
     Balake,
-    NOC,
-    TaxReceipt,
-    AADHARCard,
-    NeighboursBill,
-    BorewellCertificate,
-    RTC,
+    NOC:imageURLs.NOC,
+    TaxReceipt:imageURLs.TaxReceipt,
+    AADHARCard:imageURLs.AADHARCard,
+    NeighboursBill:imageURLs.NeighboursBill,
+    BorewellCertificate:imageURLs.BorewellCertificate,
+    RTC:imageURLs.RTC,
   });
-  console.log(req.body);
   newCustomer
     .save()
     .then((savedCustomer) => {
