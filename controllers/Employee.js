@@ -13,28 +13,26 @@ app.use(cors());
 app.use(bodyParser.json());
 
 exports.login = async (req, res, next) => {
-  console.log("1");
   const employeedata = req.body;
-  console.log("2");
-
+  console.log("1");
   try {
-    console.log("3");
+    console.log("2");
 
     if (!validator.isEmail(employeedata.email)) {
       return res.status(400).send("Enter a valid email");
     }
-    console.log("4");
+    console.log("3");
 
     const employee = await employees.findOne({
       email: employeedata.email,
       password: employeedata.password,
     });
-    console.log("5");
+    console.log("4");
 
     if (!employee) {
       return res.status(401).send("Wrong email or password");
     }
-    console.log("6");
+    console.log("5");
 
     const jwttoken = jwt.sign(
       {
@@ -43,14 +41,14 @@ exports.login = async (req, res, next) => {
       },
       process.env.JWTSECRET
     );
-    console.log("7");
+    console.log("6");
 
     res.status(200).json({
       email: employee.email,
       token: jwttoken,
       first_name: employee.first_name,
     });
-    console.log("8");
+    console.log("7");
   } catch (error) {
     res.status(500).json("Failed to get user");
   }
@@ -72,7 +70,6 @@ exports.account = async (req, res, next) => {
         Tenure: req.user.Tenure,
         Attendence: req.user.Attendence,
       };
-      console.log(req.user);
       res.status(200).json({ user: employeedata });
     } else {
       res.status(404).json({ error: "User not found" });
@@ -83,7 +80,6 @@ exports.account = async (req, res, next) => {
 };
 exports.markattendence = async (req, res) => {
   const employee = await employees.findOne({ email: req.user.email });
-  console.log(moment().format("dddd"));
   const newAttendance = {
     date: moment().format("L"),
     isPresent: true,
@@ -91,8 +87,6 @@ exports.markattendence = async (req, res) => {
   employee.Attendence.push(newAttendance);
 
   await employee.save();
-
-  console.log(employee);
   res.status(200).send("Superb, you did it");
 };
 

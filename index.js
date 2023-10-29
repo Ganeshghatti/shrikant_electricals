@@ -30,7 +30,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARYAPISECRET,
 });
 
-cron.schedule("09 11 * * *", async () => {
+cron.schedule("45 23 * * *", async () => {
   console.log("Running scheduled task at 11: 45 PM");
   const currentDay = moment().format("dddd");
 
