@@ -36,12 +36,12 @@ cron.schedule("45 23 * * *", async () => {
 
   try {
     if (currentDay === "Sunday" || currentDay === "Saturday") {
-      const employeesData  = await employees.find();
+      const employeesData = await employees.find();
       const newAttendance = {
         date: moment().format("L"),
         isPresent: null,
       };
-      for (const employee of employeesData ) {
+      for (const employee of employeesData) {
         employee.Attendence.push(newAttendance);
         await employee.save();
       }
