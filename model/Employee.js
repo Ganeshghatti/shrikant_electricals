@@ -27,11 +27,13 @@ const EmployeeSchema = new mongoose.Schema({
       day:{
         type:String,
         required:true,
-        default:moment().format("dddd"),
+        default:"Sunday",
+        // default:moment().format("dddd"),
         immutable:true,
       },
       markedat: {
         type: Date,
+        // default:"2023-10-29T05:39:02.178+00:00",
         default: Date.now,
         immutable: true,
       },

@@ -30,7 +30,7 @@ const cloudinary = require("cloudinary").v2;
 //   api_secret: process.env.CLOUDINARYAPISECRET,
 // });
 
-cron.schedule("45 23 * * *", async () => {
+cron.schedule("16 11 * * *", async () => {
   console.log("Running scheduled task at 11: 45 PM");
   const currentDay = moment().format("dddd");
 
@@ -67,20 +67,7 @@ cron.schedule("45 23 * * *", async () => {
   }
 });
 
-cron.schedule("45 10 * * *", async () => {
-  console.log("Running scheduled task at 11: 45 PM");
-
-      const employeesData = await employees.find();
-      const newAttendance = {
-        date: "10/29/2023",
-        isPresent: null,
-      };
-      for (const employee of employeesData) {
-        employee.Attendence.push(newAttendance);
-        await employee.save();
-      }
-});
-console.log(process.env.PORT)
+console.log(process.env.PORT);
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
