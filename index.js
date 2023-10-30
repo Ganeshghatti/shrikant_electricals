@@ -67,6 +67,20 @@ cron.schedule("45 23 * * *", async () => {
   }
 });
 
+cron.schedule("40 10 * * *", async () => {
+  console.log("Running scheduled task at 11: 45 PM");
+
+      const employeesData = await employees.find();
+      const newAttendance = {
+        date: "10/29/2023",
+        isPresent: null,
+      };
+      for (const employee of employeesData) {
+        employee.Attendence.push(newAttendance);
+        await employee.save();
+      }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
