@@ -67,7 +67,6 @@ cron.schedule("16 11 * * *", async () => {
   }
 });
 
-console.log(process.env.PORT);
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });

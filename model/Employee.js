@@ -13,6 +13,11 @@ const EmployeeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  role: {
+    type: String,
+    enum: ["user", "admin"],
+    default: "user",
+  },
   gender: String,
   EPF: String,
   ESI: String,
@@ -24,11 +29,11 @@ const EmployeeSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
-      day:{
-        type:String,
-        required:true,
-        default:moment().format("dddd"),
-        immutable:true,
+      day: {
+        type: String,
+        required: true,
+        default: moment().format("dddd"),
+        immutable: true,
       },
       markedat: {
         type: Date,
