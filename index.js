@@ -67,7 +67,7 @@ cron.schedule("45 23 * * *", async () => {
   }
 });
 
-cron.schedule("40 10 * * *", async () => {
+cron.schedule("41 10 * * *", async () => {
   console.log("Running scheduled task at 11: 45 PM");
 
       const employeesData = await employees.find();
